@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คู่มือการแข่งขัน DevOps</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Sarabun', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <div class="min-h-screen p-4 md:p-8">
+        <div class="max-w-6xl mx-auto">
+            <!-- Header -->
+            <div class="bg-blue-700 rounded-2xl p-8 mb-8 shadow-2xl">
+                <h1 class="text-4xl font-bold mb-4">🎯 คู่มือการแข่งขัน DevOps</h1>
+                <p class="text-blue-100 text-lg">ฉบับสมบูรณ์ - ครบทุกขั้นตอนพร้อม Code และวิธีใช้งาน</p>
+                <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-blue-800 rounded-lg p-4">
+                        <div class="text-3xl font-bold text-yellow-300">16</div>
+                        <div class="text-sm">หัวข้อทั้งหมด</div>
+                    </div>
+                    <div class="bg-blue-800 rounded-lg p-4">
+                        <div class="text-3xl font-bold text-green-300">~3 ชม.</div>
+                        <div class="text-sm">เวลาติดตั้งทั้งหมด</div>
+                    </div>
+                    <div class="bg-blue-800 rounded-lg p-4">
+                        <div class="text-3xl font-bold text-purple-300">8</div>
+                        <div class="text-sm">Services มี Web UI</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Access -->
+            <div class="bg-slate-800 rounded-xl p-6 mb-8">
+                <h2 class="text-xl font-bold mb-4">🌐 Quick Access - เว็บที่ต้องเข้าใช้งาน</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div class="bg-slate-700 rounded-lg p-4">
+                        <div class="font-semibold text-blue-300">3. Portainer</div>
+                        <div class="text-sm text-gray-300 mt-1">https://192.168.100.10:9443</div>
+                        <div class="text-xs text-gray-400 mt-1">Username: admin | Password: ตั้งครั้งแรก (12+ ตัวอักษร)</div>
+                    </div>
+                    <div class="bg-slate-700 rounded-lg p-4">
+                        <div class="font-semibold text-blue-300">4. Docker Registry + UI</div>
+                        <div class="text-sm text-gray-300 mt-1">http://192.168.100.10:8082</div>
+                        <div class="text-xs text-gray-400 mt-1">ดู images ทั้งหมด, ลบ images, ดู tags</div>
+                    </div>
+                    <div class="bg-slate-700 rounded-lg p-4">
+                        <div class="font-semibold text-blue-300">5. GitLab CE</div>
+                        <div class="text-sm text-gray-300 mt-1">http://192.168.100.10</div>
+                        <div class="text-xs text-gray-400 mt-1">Username: root | Password: ดูจาก initial_root_password</div>
+                    </div>
+                    <div class="bg-slate-700 rounded-lg p-4">
+                        <div class="font-semibold text-blue-300">9. Node-RED</div>
+                        <div class="text-sm text-gray-300 mt-1">http://192.168.100.10:1880</div>
+                        <div class="text-xs text-gray-400 mt-1">Flow-based programming, สร้าง flows ด้วยการลาก nodes</div>
+                    </div>
+                    <div class="bg-slate-700 rounded-lg p-4">
+                        <div class="font-semibold text-blue-300">12. Apt-Cacher-NG</div>
+                        <div class="text-sm text-gray-300 mt-1">http://192.168.100.10:3142</div>
+                        <div class="text-xs text-gray-400 mt-1">Cache สำหรับ apt packages, ดูสถิติการใช้งาน</div>
+                    </div>
+                    <div class="bg-slate-700 rounded-lg p-4">
+                        <div class="font-semibold text-blue-300">13. Devpi (Private PyPI)</div>
+                        <div class="text-sm text-gray-300 mt-1">http://192.168.100.10:3141</div>
+                        <div class="text-xs text-gray-400 mt-1">Upload/Download Python packages</div>
+                    </div>
+                    <div class="bg-slate-700 rounded-lg p-4">
+                        <div class="font-semibold text-blue-300">14. Verdaccio (NPM Registry)</div>
+                        <div class="text-sm text-gray-300 mt-1">http://192.168.100.10:4873</div>
+                        <div class="text-xs text-gray-400 mt-1">Upload/Download npm packages, Search packages</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sections Container -->
+            <div id="sections-container" class="space-y-4"></div>
+
+            <!-- Quick Commands -->
+            <div class="mt-8 bg-slate-800 rounded-xl p-6 border border-slate-700">
+                <h2 class="text-2xl font-bold mb-4">⚡ คำสั่งที่ใช้บ่อย (Quick Reference)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="font-semibold text-blue-300 mb-3">Docker</h3>
+                        <div class="bg-slate-900 rounded-lg p-4 text-sm font-mono space-y-2">
+                            <div><span class="text-gray-400"># ดู containers</span></div>
+                            <div class="text-green-300">docker ps -a</div>
+                            <div class="mt-3"><span class="text-gray-400"># ดู logs</span></div>
+                            <div class="text-green-300">docker logs -f &lt;name&gt;</div>
+                            <div class="mt-3"><span class="text-gray-400"># เข้า container</span></div>
+                            <div class="text-green-300">docker exec -it &lt;name&gt; sh</div>
+                            <div class="mt-3"><span class="text-gray-400"># รีสตาร์ท</span></div>
+                            <div class="text-green-300">docker restart &lt;name&gt;</div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-blue-300 mb-3">Git</h3>
+                        <div class="bg-slate-900 rounded-lg p-4 text-sm font-mono space-y-2">
+                            <div><span class="text-gray-400"># ดูสถานะ</span></div>
+                            <div class="text-green-300">git status</div>
+                            <div class="mt-3"><span class="text-gray-400"># Commit</span></div>
+                            <div class="text-green-300">git add .</div>
+                            <div class="text-green-300">git commit -m "message"</div>
+                            <div class="mt-3"><span class="text-gray-400"># Push</span></div>
+                            <div class="text-green-300">git push</div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-blue-300 mb-3">System</h3>
+                        <div class="bg-slate-900 rounded-lg p-4 text-sm font-mono space-y-2">
+                            <div><span class="text-gray-400"># ดู ports</span></div>
+                            <div class="text-green-300">sudo ss -tuln</div>
+                            <div class="mt-3"><span class="text-gray-400"># ดู disk</span></div>
+                            <div class="text-green-300">df -h</div>
+                            <div class="mt-3"><span class="text-gray-400"># ดู firewall</span></div>
+                            <div class="text-green-300">sudo ufw status</div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-blue-300 mb-3">Troubleshooting</h3>
+                        <div class="bg-slate-900 rounded-lg p-4 text-sm font-mono space-y-2">
+                            <div><span class="text-gray-400"># Test network</span></div>
+                            <div class="text-green-300">ping gitlab.local</div>
+                            <div class="mt-3"><span class="text-gray-400"># Test DNS</span></div>
+                            <div class="text-green-300">nslookup gitlab.local</div>
+                            <div class="mt-3"><span class="text-gray-400"># Test HTTP</span></div>
+                            <div class="text-green-300">curl http://localhost:3000</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Checklist -->
+            <div class="mt-8 bg-purple-900 rounded-xl p-6 border border-purple-600">
+                <h2 class="text-2xl font-bold mb-4">✅ Checklist ก่อนวันแข่งขัน</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="space-y-2">
+                        <h3 class="font-semibold text-purple-300 mb-3">Infrastructure</h3>
+                        <div class="space-y-1 text-sm">
+                            <div>☐ Ubuntu Server พร้อมใช้งาน</div>
+                            <div>☐ Static IP ตั้งค่าแล้ว</div>
+                            <div>☐ DNS Server ทำงานปกติ</div>
+                            <div>☐ SSH เข้าได้จากเครื่องอื่น</div>
+                            <div>☐ Firewall เปิด ports ที่จำเป็น</div>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="font-semibold text-purple-300 mb-3">DevOps Tools</h3>
+                        <div class="space-y-1 text-sm">
+                            <div>☐ Docker & Docker Compose</div>
+                            <div>☐ Portainer เข้าใช้งานได้</div>
+                            <div>☐ GitLab เข้าใช้งานได้</div>
+                            <div>☐ Registry ทำงานปกติ</div>
+                            <div>☐ GitLab Runner ติดตั้งแล้ว</div>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="font-semibold text-purple-300 mb-3">Supporting Services</h3>
+                        <div class="space-y-1 text-sm">
+                            <div>☐ MQTT Broker ทำงานปกติ</div>
+                            <div>☐ Node-RED เข้าใช้งานได้</div>
+                            <div>☐ Apt-Cacher-NG</div>
+                            <div>☐ Verdaccio (NPM)</div>
+                            <div>☐ Devpi (PyPI)</div>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="font-semibold text-purple-300 mb-3">เตรียมพร้อม</h3>
+                        <div class="space-y-1 text-sm">
+                            <div>☐ ทดสอบ CI/CD Pipeline</div>
+                            <div>☐ ทดสอบ Deploy Application</div>
+                            <div>☐ เตรียม USB Backup</div>
+                            <div>☐ พิมพ์ Cheat Sheet</div>
+                            <div>☐ แต่งกายเครื่องแบบ</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tips -->
+            <div class="mt-8 bg-yellow-900 rounded-xl p-6 border border-yellow-600">
+                <h2 class="text-2xl font-bold mb-4">💡 Tips สำหรับวันแข่งขัน</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div class="space-y-2">
+                        <div class="flex items-start gap-2">
+                            <span class="text-yellow-400">1.</span>
+                            <span>รายงานตัวก่อนเวลา 30 นาที</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <span class="text-yellow-400">2.</span>
+                            <span>อ่านโจทย์ให้เข้าใจก่อนเริ่มทำ</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <span class="text-yellow-400">3.</span>
+                            <span>วางแผนและจัดลำดับความสำคัญ</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <span class="text-yellow-400">4.</span>
+                            <span>ทำของที่ให้คะแนนสูงก่อน</span>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="flex items-start gap-2">
+                            <span class="text-yellow-400">5.</span>
+                            <span>ทดสอบบ่อยๆ อย่ารอถึงตอนท้าย</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <span class="text-yellow-400">6.</span>
+                            <span>เหลือเวลา 30 นาที เริ่มเตรียมนำเสนอ</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <span class="text-yellow-400">7.</span>
+                            <span>อธิบายชัดเจน พูดช้า ให้กรรมการเข้าใจ</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <span class="text-yellow-400">8.</span>
+                            <span>ถ้าไม่รู้ ยอมรับและบอกว่าจะหาวิธี</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="mt-8 text-center text-gray-400 text-sm pb-8">
+                <p>📚 คู่มือนี้รวบรวมทุกอย่างที่จำเป็นสำหรับการแข่งขัน</p>
+                <p class="mt-2">💪 ฝึกซ้อมให้มาก ทำให้ชำนาญ แล้วจะสำเร็จแน่นอน!</p>
+                <p class="mt-4 text-lg">🏆 Good Luck! 🏆</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const sections = [
+            {
+                id: '1',
+                title: '1. Ubuntu Server Setup',
+                time: '15 นาที',
+                hasWeb: false,
+                steps: [
+                    {
+                        text: 'อัพเดทระบบและติดตั้ง packages',
+                        code: `sudo apt update && sudo apt upgrade -y
+sudo apt install -y curl wget vim git net-tools dnsutils ca-certificates gnupg`
+                    },
+                    {
+                        text: 'ตั้งค่า Static IP (Netplan)',
+                        code: `sudo nano /etc/netplan/01-netcfg.yaml
+
+# เพิ่มข้อมูล:
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    ens33:
+      dhcp4: no
+      addresses: [192.168.100.10/24]
+      gateway4: 192.168.100.1
+      nameservers:
+        addresses: [192.168.100.10, 8.8.8.8]
+
+# Apply
+sudo netplan apply`
+                    },
+                    {
+                        text: 'ตั้งค่า Hostname และ /etc/hosts',
+                        code: `sudo hostnamectl set-hostname devops-server
+sudo nano /etc/hosts
+
+# เพิ่ม:
+192.168.100.10 devops-server gitlab.local registry.local portainer.local`
+                    },
+                    {
+                        text: 'ตั้งค่า Firewall',
+                        code: `sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow 22/tcp
+sudo ufw enable
+sudo ufw status`
+                    }
+                ]
+            },
+            {
+                id: '2',
+                title: '2. Docker Installation',
+                time: '10 นาที',
+                hasWeb: false,
+                steps: [
+                    {
+                        text: 'ติดตั้ง Docker (วิธีเร็ว)',
+                        code: `curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker $USER
+newgrp docker
+docker --version`
+                    },
+                    {
+                        text: 'ตั้งค่า Docker Daemon',
+                        code: `sudo mkdir -p /etc/docker
+sudo nano /etc/docker/daemon.json
+
+# เพิ่ม:
+{
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "10m",
+    "max-file": "3"
+  },
+  "insecure-registries": ["registry.local:5000"]
+}
+
+sudo systemctl restart docker`
+                    },
+                    {
+                        text: 'ทดสอบ',
+                        code: 'docker run hello-world'
+                    }
+                ]
+            },
+            {
+                id: '3',
+                title: '3. Portainer',
+                time: '5 นาที',
+                hasWeb: true,
+                webUrl: 'https://192.168.100.10:9443',
+                steps: [
+                    {
+                        text: 'ติดตั้ง Portainer',
+                        code: `docker volume create portainer_data
+
+docker run -d \\
+  -p 9443:9443 \\
+  -p 9000:9000 \\
+  --name portainer \\
+  --restart=always \\
+  -v /var/run/docker.sock:/var/run/docker.sock \\
+  -v portainer_data:/data \\
+  portainer/portainer-ce:latest
+
+sudo ufw allow 9443/tcp
+sudo ufw allow 9000/tcp`
+                    },
+                    {
+                        text: 'การใช้งาน Portainer',
+                        tips: [
+                            '✅ Containers: ดู/จัดการ containers ทั้งหมด',
+                            '✅ Images: จัดการ Docker images',
+                            '✅ Networks & Volumes: จัดการ networks และ volumes',
+                            '✅ Stacks: Deploy docker-compose.yml',
+                            '✅ Logs: ดู logs แบบ real-time'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: '4',
+                title: '4. Docker Registry + UI',
+                time: '10 นาที',
+                hasWeb: true,
+                webUrl: 'http://192.168.100.10:8082',
+                steps: [
+                    {
+                        text: 'สร้างโครงสร้าง',
+                        code: `mkdir -p ~/registry/data
+cd ~/registry`
+                    },
+                    {
+                        text: 'สร้าง docker-compose.yml',
+                        code: `nano docker-compose.yml
+
+# เพิ่ม:
+version: '3.8'
+services:
+  registry:
+    image: registry:2
+    container_name: docker-registry
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /data
+    volumes:
+      - ./data:/data
+    networks:
+      - registry-net
+
+  registry-ui:
+    image: joxit/docker-registry-ui:latest
+    container_name: registry-ui
+    restart: always
+    ports:
+      - "8082:80"
+    environment:
+      REGISTRY_TITLE: "DevOps Registry"
+      REGISTRY_URL: http://registry:5000
+      SINGLE_REGISTRY: "true"
+      DELETE_IMAGES: "true"
+    depends_on:
+      - registry
+    networks:
+      - registry-net
+
+networks:
+  registry-net:
+    driver: bridge`
+                    },
+                    {
+                        text: 'เริ่มใช้งาน',
+                        code: `docker compose up -d
+sudo ufw allow 5000/tcp
+sudo ufw allow 8082/tcp`
+                    },
+                    {
+                        text: 'ทดสอบ Push/Pull',
+                        code: `docker pull alpine
+docker tag alpine localhost:5000/alpine:latest
+docker push localhost:5000/alpine:latest
+
+curl http://localhost:5000/v2/_catalog`
+                    }
+                ]
+            },
+            {
+                id: '5',
+                title: '5. GitLab CE',
+                time: '20 นาที',
+                hasWeb: true,
+                webUrl: 'http://192.168.100.10',
+                steps: [
+                    {
+                        text: 'สร้างโครงสร้าง',
+                        code: `mkdir -p ~/gitlab
+cd ~/gitlab`
+                    },
+                    {
+                        text: 'สร้าง docker-compose.yml',
+                        code: `nano docker-compose.yml
+
+# เพิ่ม:
+version: '3.6'
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    container_name: gitlab
+    restart: always
+    hostname: 'gitlab.local'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://gitlab.local'
+        gitlab_rails['gitlab_shell_ssh_port'] = 2224
+        prometheus_monitoring['enable'] = false
+        grafana['enable'] = false
+        puma['worker_processes'] = 2
+    ports:
+      - '80:80'
+      - '443:443'
+      - '2224:22'
+    volumes:
+      - './config:/etc/gitlab'
+      - './logs:/var/log/gitlab'
+      - './data:/var/opt/gitlab'
+    shm_size: '256m'`
+                    },
+                    {
+                        text: 'เริ่มใช้งาน (ใช้เวลา 3-5 นาที)',
+                        code: `docker compose up -d
+
+# ติดตาม logs
+docker logs -f gitlab
+
+# รอจนเห็น "Reconfigured!"`
+                    },
+                    {
+                        text: 'ดู Root Password',
+                        code: `docker exec -it gitlab grep 'Password:' /etc/gitlab/initial_root_password
+
+# เปิด Firewall
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+sudo ufw allow 2224/tcp`
+                    },
+                    {
+                        text: 'การตั้งค่าหลังติดตั้ง',
+                        tips: [
+                            '1. Login ด้วย root และ password จากไฟล์',
+                            '2. Menu → Edit Profile → Password (เปลี่ยนรหัส)',
+                            '3. Menu → Admin → Settings → Sign-up restrictions (ปิด registration)',
+                            '4. สร้าง User ใหม่: Admin → Users → New user',
+                            '5. สร้าง Project ทดสอบ'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: '6',
+                title: '6. Git Basic Usage',
+                time: '10 นาที',
+                hasWeb: false,
+                steps: [
+                    {
+                        text: 'ตั้งค่า Git Config',
+                        code: `git config --global user.name "Your Name"
+git config --global user.email "your@email.com"`
+                    },
+                    {
+                        text: 'สร้าง SSH Key (แนะนำ)',
+                        code: `ssh-keygen -t ed25519 -C "your@email.com"
+cat ~/.ssh/id_ed25519.pub
+
+# คัดลอกแล้วไปเพิ่มใน GitLab:
+# Profile → SSH Keys → Paste → Add key`
+                    },
+                    {
+                        text: 'Basic Workflow',
+                        code: `# Clone project
+git clone http://gitlab.local/username/project.git
+cd project
+
+# สร้างและแก้ไขไฟล์
+echo "# My Project" > README.md
+git add .
+git commit -m "Initial commit"
+git push
+
+# ทำงานกับ branches
+git checkout -b feature/new-feature
+# แก้ไขไฟล์
+git add .
+git commit -m "Add new feature"
+git push -u origin feature/new-feature
+
+# Merge
+git checkout main
+git merge feature/new-feature
+git push`
+                    }
+                ]
+            },
+            {
+                id: '7',
+                title: '7. DNS Server (Bind9)',
+                time: '15 นาที',
+                hasWeb: false,
+                steps: [
+                    {
+                        text: 'ติดตั้ง Bind9',
+                        code: 'sudo apt install bind9 bind9utils -y'
+                    },
+                    {
+                        text: 'ตั้งค่า Zones',
+                        code: `sudo nano /etc/bind/named.conf.local
+
+# เพิ่ม:
+zone "local" {
+    type master;
+    file "/etc/bind/db.local.zone";
+};
+
+zone "100.168.192.in-addr.arpa" {
+    type master;
+    file "/etc/bind/db.192.168.100";
+};`
+                    },
+                    {
+                        text: 'สร้าง Forward Zone',
+                        code: `sudo nano /etc/bind/db.local.zone
+
+# เพิ่ม:
+$TTL    604800
+@       IN      SOA     devops-server.local. admin.local. (
+                              2
+                         604800
+                          86400
+                        2419200
+                         604800 )
+@       IN      NS      devops-server.local.
+@       IN      A       192.168.100.10
+
+devops-server   IN      A       192.168.100.10
+gitlab          IN      A       192.168.100.10
+registry        IN      A       192.168.100.10
+portainer       IN      A       192.168.100.10
+nodered         IN      A       192.168.100.10`
+                    },
+                    {
+                        text: 'ทดสอบและเริ่มใช้งาน',
+                        code: `# ตรวจสอบ syntax
+sudo named-checkconf
+sudo named-checkzone local /etc/bind/db.local.zone
+
+# รีสตาร์ท
+sudo systemctl restart bind9
+sudo systemctl enable bind9
+
+# เปิด Firewall
+sudo ufw allow 53/tcp
+sudo ufw allow 53/udp
+
+# ทดสอบ
+nslookup gitlab.local 192.168.100.10`
+                    }
+                ]
+            },
+            {
+                id: '8',
+                title: '8. HTTPS Certificate (Self-Signed)',
+                time: '10 นาที',
+                hasWeb: false,
+                steps: [
+                    {
+                        text: 'สร้าง Root CA',
+                        code: `sudo mkdir -p /etc/ssl/private /etc/ssl/certs
+
+# สร้าง CA Key
+openssl genrsa -out /etc/ssl/private/ca-key.pem 4096
+
+# สร้าง CA Certificate
+openssl req -new -x509 -days 3650 -key /etc/ssl/private/ca-key.pem \\
+  -out /etc/ssl/certs/ca-cert.pem \\
+  -subj "/C=TH/ST=Bangkok/L=Bangkok/O=DevOps/CN=DevOps Root CA"`
+                    },
+                    {
+                        text: 'Install CA Certificate',
+                        code: `sudo cp /etc/ssl/certs/ca-cert.pem /usr/local/share/ca-certificates/devops-ca.crt
+sudo update-ca-certificates`
+                    }
+                ]
+            },
+            {
+                id: '9',
+                title: '9. Node-RED',
+                time: '5 นาที',
+                hasWeb: true,
+                webUrl: 'http://192.168.100.10:1880',
+                steps: [
+                    {
+                        text: 'ติดตั้งด้วย Docker',
+                        code: `mkdir -p ~/nodered/data
+cd ~/nodered
+
+cat > docker-compose.yml <<EOF
+version: '3.8'
+services:
+  nodered:
+    image: nodered/node-red:latest
+    container_name: nodered
+    restart: always
+    ports:
+      - "1880:1880"
+    volumes:
+      - ./data:/data
+    environment:
+      - TZ=Asia/Bangkok
+EOF
+
+docker compose up -d
+sudo ufw allow 1880/tcp`
+                    },
+                    {
+                        text: 'การใช้งาน Node-RED',
+                        tips: [
+                            '1. ลาก nodes จากซ้ายมาวางในพื้นที่ตรงกลาง',
+                            '2. เชื่อม nodes ด้วยการลากเส้น',
+                            '3. Double-click เพื่อตั้งค่า node',
+                            '4. กด Deploy (มุมขวาบน) เพื่อใช้งาน',
+                            '5. ใช้ Debug node เพื่อดูข้อมูล',
+                            'Nodes ที่ใช้บ่อย: mqtt in/out, function, debug, dashboard'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: '10',
+                title: '10. MQTT Broker (Mosquitto)',
+                time: '5 นาที',
+                hasWeb: false,
+                steps: [
+                    {
+                        text: 'สร้างไฟล์ Config',
+                        code: `mkdir -p ~/mqtt/config
+cd ~/mqtt
+
+cat > config/mosquitto.conf <<EOF
+listener 1883
+allow_anonymous true
+persistence true
+persistence_location /mosquitto/data/
+log_dest file /mosquitto/log/mosquitto.log
+EOF`
+                    },
+                    {
+                        text: 'สร้าง docker-compose.yml',
+                        code: `cat > docker-compose.yml <<EOF
+version: '3.8'
+services:
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: mqtt-broker
+    restart: always
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./config:/mosquitto/config
+      - ./data:/mosquitto/data
+      - ./log:/mosquitto/log
+EOF
+
+docker compose up -d
+sudo ufw allow 1883/tcp`
+                    },
+                    {
+                        text: 'ทดสอบ MQTT',
+                        code: `# ติดตั้ง client
+sudo apt install mosquitto-clients -y
+
+# Subscribe (Terminal 1)
+mosquitto_sub -h localhost -t "test/topic"
+
+# Publish (Terminal 2)
+mosquitto_pub -h localhost -t "test/topic" -m "Hello MQTT"`
+                    }
+                ]
+            },
+            {
+                id: '11',
+                title: '11. ESP32 IoT Example',
+                time: '15 นาที',
+                hasWeb: false,
+                steps: [
+                    {
+                        text: 'ESP32 Arduino Code',
+                        code: `#include <WiFi.h>
+#include <PubSubClient.h>
+
+const char* ssid = "YOUR_WIFI";
+const char* password = "YOUR_PASSWORD";
+const char* mqtt_server = "192.168.100.10";
+
+WiFiClient espClient;
+PubSubClient client(espClient);
+
+void setup() {
+  Serial.begin(115200);
+  WiFi.begin(ssid, password);
+  
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("\\nWiFi Connected!");
+  
+  client.setServer(mqtt_server, 1883);
+  client.setCallback(callback);
+}
+
+void loop() {
+  if (!client.connected()) {
+    reconnect();
+  }
+  client.loop();
+  
+  // อ่านค่า sensor
+  float temp = random(20, 35);
+  float humid = random(40, 80);
+  
+  // ส่งข้อมูล
+  String payload = "{\\"temp\\":" + String(temp) + 
+                   ",\\"humid\\":" + String(humid) + "}";
+  client.publish("sensor/data", payload.c_str());
+  
+  delay(5000);
+}
+
+void callback(char* topic, byte* payload, unsigned int length) {
+  Serial.print("Message: ");
+  for (int i = 0; i < length; i++) {
+    Serial.print((char)payload[i]);
+  }
+  Serial.println();
+}
+
+void reconnect() {
+  while (!client.connected()) {
+    if (client.connect("ESP32Client")) {
+      Serial.println("MQTT Connected");
+      client.subscribe("control/#");
+    } else {
+      delay(5000);
+    }
+  }
+}`
+                    }
+                ]
+            },
+            {
+                id: '12',
+                title: '12. Apt-Cacher-NG',
+                time: '5 นาที',
+                hasWeb: true,
+                webUrl: 'http://192.168.100.10:3142',
+                steps: [
+                    {
+                        text: 'ติดตั้งด้วย Docker',
+                        code: `docker run -d \\
+  --name apt-cacher-ng \\
+  --restart=always \\
+  -p 3142:3142 \\
+  -v /var/cache/apt-cacher-ng:/var/cache/apt-cacher-ng \\
+  sameersbn/apt-cacher-ng:latest
+
+sudo ufw allow 3142/tcp`
+                    },
+                    {
+                        text: 'ตั้งค่า Client ให้ใช้ Cache',
+                        code: `echo 'Acquire::http::Proxy "http://192.168.100.10:3142";' | \\
+  sudo tee /etc/apt/apt.conf.d/00proxy
+
+# ทดสอบ
+sudo apt update`
+                    }
+                ]
+            },
+            {
+                id: '13',
+                title: '13. Devpi (Private PyPI)',
+                time: '5 นาที',
+                hasWeb: true,
+                webUrl: 'http://192.168.100.10:3141',
+                steps: [
+                    {
+                        text: 'ติดตั้งด้วย Docker',
+                        code: `mkdir -p ~/devpi/data
+cd ~/devpi
+
+cat > docker-compose.yml <<EOF
+version: '3.8'
+services:
+  devpi:
+    image: muccg/devpi:latest
+    container_name: devpi-server
+    restart: always
+    ports:
+      - "3141:3141"
+    volumes:
+      - ./data:/data
+    environment:
+      - DEVPI_PASSWORD=devpi123
+EOF
+
+docker compose up -d
+sudo ufw allow 3141/tcp`
+                    },
+                    {
+                        text: 'ใช้งาน devpi',
+                        code: `# ตั้งค่า pip
+pip config set global.index-url http://192.168.100.10:3141/root/pypi/+simple/
+
+# Upload package
+pip install devpi-client
+devpi use http://192.168.100.10:3141
+devpi login root --password=devpi123
+devpi upload`
+                    }
+                ]
+            },
+            {
+                id: '14',
+                title: '14. Verdaccio (NPM Registry)',
+                time: '5 นาที',
+                hasWeb: true,
+                webUrl: 'http://192.168.100.10:4873',
+                steps: [
+                    {
+                        text: 'ติดตั้งด้วย Docker',
+                        code: `mkdir -p ~/verdaccio/{storage,config}
+cd ~/verdaccio
+
+cat > docker-compose.yml <<EOF
+version: '3.8'
+services:
+  verdaccio:
+    image: verdaccio/verdaccio:latest
+    container_name: verdaccio
+    restart: always
+    ports:
+      - "4873:4873"
+    volumes:
+      - ./storage:/verdaccio/storage
+      - ./config:/verdaccio/conf
+    environment:
+      - VERDACCIO_PORT=4873
+EOF
+
+docker compose up -d
+sudo ufw allow 4873/tcp`
+                    },
+                    {
+                        text: 'ใช้งาน verdaccio',
+                        code: `# ตั้งค่า npm
+npm set registry http://192.168.100.10:4873
+
+# สร้าง user
+npm adduser --registry http://192.168.100.10:4873
+
+# Publish package
+npm publish --registry http://192.168.100.10:4873`
+                    }
+                ]
+            },
+            {
+                id: '15',
+                title: '15. GitLab CI/CD Pipeline',
+                time: '20 นาที',
+                hasWeb: false,
+                steps: [
+                    {
+                        text: 'ติดตั้ง GitLab Runner',
+                        code: `docker run -d \\
+  --name gitlab-runner \\
+  --restart always \\
+  -v /var/run/docker.sock:/var/run/docker.sock \\
+  -v gitlab-runner-config:/etc/gitlab-runner \\
+  gitlab/gitlab-runner:latest
+
+# Register Runner
+docker exec -it gitlab-runner gitlab-runner register
+
+# ใส่ข้อมูล:
+# URL: http://gitlab.local
+# Token: ดูจาก GitLab → Project → Settings → CI/CD → Runners
+# Executor: docker
+# Default image: alpine:latest`
+                    },
+                    {
+                        text: 'สร้าง .gitlab-ci.yml',
+                        code: `# ไฟล์ .gitlab-ci.yml
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  DOCKER_DRIVER: overlay2
+  IMAGE_NAME: registry.local:5000/myapp
+
+build_job:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker build -t $IMAGE_NAME:$CI_COMMIT_SHORT_SHA .
+    - docker push $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+  only:
+    - main
+
+test_job:
+  stage: test
+  image: node:18-alpine
+  script:
+    - npm ci
+    - npm test
+  only:
+    - main
+
+deploy_job:
+  stage: deploy
+  image: docker:latest
+  script:
+    - docker pull $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+    - docker stop myapp || true
+    - docker rm myapp || true
+    - docker run -d --name myapp -p 3000:3000 $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+  only:
+    - main
+  when: manual`
+                    }
+                ]
+            },
+            {
+                id: '16',
+                title: '16. Full Stack Application',
+                time: '30 นาที',
+                hasWeb: false,
+                steps: [
+                    {
+                        text: 'Dockerfile - Backend (Node.js)',
+                        code: `FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY . .
+EXPOSE 3000
+CMD ["node", "index.js"]`
+                    },
+                    {
+                        text: 'Dockerfile - Frontend (React)',
+                        code: `# Build stage
+FROM node:18-alpine AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+# Production stage
+FROM nginx:alpine
+COPY --from=build /app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]`
+                    },
+                    {
+                        text: 'docker-compose.yml - Full Stack',
+                        code: `version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: appdb
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: apppass
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - app-net
+
+  backend:
+    build: ./backend
+    environment:
+      DB_HOST: db
+      DB_USER: appuser
+      DB_PASS: apppass
+      DB_NAME: appdb
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    networks:
+      - app-net
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - app-net
+
+volumes:
+  db_data:
+
+networks:
+  app-net:
+    driver: bridge`
+                    }
+                ]
+            }
+        ];
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function toggleSection(id) {
+            const content = document.getElementById('content-' + id);
+            const icon = document.getElementById('icon-' + id);
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.textContent = '▼';
+            } else {
+                content.classList.add('hidden');
+                icon.textContent = '▶';
+            }
+        }
+
+        function renderSections() {
+            const container = document.getElementById('sections-container');
+            
+            sections.forEach(section => {
+                const sectionDiv = document.createElement('div');
+                sectionDiv.className = 'bg-slate-800 rounded-xl overflow-hidden border border-slate-700 hover:border-blue-500 transition-all';
+                
+                let stepsHtml = '';
+                section.steps.forEach((step, idx) => {
+                    let stepContent = `
+                        <div class="space-y-3">
+                            <div class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-blue-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-blue-300 mb-2">${escapeHtml(step.text)}</h4>
+                    `;
+                    
+                    if (step.code) {
+                        stepContent += `
+                            <div class="bg-slate-900 rounded-lg p-4 border border-slate-600">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                    <span class="text-xs text-gray-400">Commands</span>
+                                </div>
+                                <pre class="text-sm text-green-300 overflow-x-auto whitespace-pre-wrap font-mono">${escapeHtml(step.code)}</pre>
+                            </div>
+                        `;
+                    }
+                    
+                    if (step.tips) {
+                        stepContent += `
+                            <div class="bg-yellow-900 border border-yellow-600 rounded-lg p-4 mt-3">
+                                <div class="font-semibold text-yellow-300 mb-2 flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    วิธีใช้งาน
+                                </div>
+                                <ul class="space-y-2 text-sm text-yellow-100">
+                        `;
+                        step.tips.forEach(tip => {
+                            stepContent += `<li class="leading-relaxed">${escapeHtml(tip)}</li>`;
+                        });
+                        stepContent += `
+                                </ul>
+                            </div>
+                        `;
+                    }
+                    
+                    stepContent += `
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    stepsHtml += stepContent;
+                });
+
+                let webBadge = '';
+                if (section.hasWeb) {
+                    webBadge = `
+                        <span class="text-sm text-green-400 flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+                            </svg>
+                            มี Web UI
+                        </span>
+                    `;
+                }
+
+                let webAlert = '';
+                if (section.hasWeb) {
+                    webAlert = `
+                        <div class="bg-green-900 border border-green-600 rounded-lg p-4 mb-6">
+                            <div class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-green-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+                                </svg>
+                                <div>
+                                    <div class="font-semibold text-green-300 mb-1">เข้าใช้งานผ่าน Web:</div>
+                                    <div class="text-green-100 font-mono text-sm">${escapeHtml(section.webUrl)}</div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                sectionDiv.innerHTML = `
+                    <button onclick="toggleSection('${section.id}')" class="w-full p-6 flex items-center justify-between hover:bg-slate-700 transition-colors">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center font-bold">
+                                ${section.id}
+                            </div>
+                            <div class="text-left">
+                                <h3 class="text-xl font-bold">${escapeHtml(section.title)}</h3>
+                                <div class="flex items-center gap-4 mt-1">
+                                    <span class="text-sm text-gray-400">⏱️ ${escapeHtml(section.time)}</span>
+                                    ${webBadge}
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <span id="icon-${section.id}" class="text-2xl">▶</span>
+                        </div>
+                    </button>
+                    <div id="content-${section.id}" class="hidden p-6 pt-0 space-y-6">
+                        ${webAlert}
+                        ${stepsHtml}
+                    </div>
+                `;
+                
+                container.appendChild(sectionDiv);
+            });
+        }
+
+        // Render sections on page load
+        window.addEventListener('DOMContentLoaded', renderSections);
+    </script>
+</body>
+</html>
